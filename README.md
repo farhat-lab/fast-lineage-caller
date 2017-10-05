@@ -5,6 +5,8 @@ The idea of this program is to be able to call the lineage of a query MTB (Mycob
 ### Requirements
 * you need to install vrt_tools (check https://github.com/farhat-lab/vrt-tools)
 
+###Usage
+
 #### How to call the lineage starting from a complete genome (1 single scaffold)
 1. We use Mummer to compare the two genomes
 ```
@@ -55,7 +57,7 @@ FastLineageCaller-assign2lineage.py example/db_snps.tsv ref_vs_00-R0025.vrt
 --decision: lineage2,lineage2.2,lineage2.2.1,lineage2.2.1.1
 ```
 
-### How to call the lineage starting from a vcf file
+#### How to call the lineage starting from a vcf file
 1. We convert the vcf file to vrt
 ```bash
 vrtTools-vcf2vrt.py example/00-R0025.vcf 00-R0025.vrt 1
