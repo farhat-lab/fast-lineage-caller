@@ -5,7 +5,7 @@ The idea of this program is to be able to call the lineage of a query MTB (Mycob
 ### Requirements
 * you need to install vrt_tools (check https://github.com/farhat-lab/vrt-tools)
 
-###Usage
+### Usage
 
 #### How to call the lineage starting from a complete genome (1 single scaffold)
 1. We use Mummer to compare the two genomes
