@@ -1,6 +1,6 @@
 
 ### Concept
-The idea of this program is to be able to call the lineage of a query MTB (Mycobacterium tuberculosis) strain quickly. You should be able to do this either starting from a genome assembly or from a vcf file.
+The idea of this program is to be able to call the lineage of a query MTB (Mycobacterium tuberculosis) strain quickly. You should be able to do this either starting from a genome assembly or from a vcf file. The program uses the 62 SNPs to call the lineages (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4166679/)
 
 ### Requirements
 * you need to install vrt_tools (check https://github.com/farhat-lab/vrt-tools)
