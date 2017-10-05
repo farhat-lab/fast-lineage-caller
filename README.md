@@ -1,11 +1,11 @@
 
-###Concept
+### Concept
 The idea of this program is to be able to call the lineage of a query MTB (Mycobacterium tuberculosis) strain quickly. You should be able to do this either starting from a genome assembly or from a vcf file.
 
-###Requirements
+### Requirements
 * you need to install vrt_tools (check https://github.com/farhat-lab/vrt-tools)
 
-####How to call the lineage starting from a complete genome (1 single scaffold)
+#### How to call the lineage starting from a complete genome (1 single scaffold)
 1. We use Mummer to compare the two genomes
 ```
 vrtTools-runMummer.py example/H37Rv_mod.fasta example/00-R0025.fasta mummerOut
@@ -18,13 +18,13 @@ vrtTools-snps2vrt.py mummerOut.snps example/H37Rv_mod.fasta example/00-R0025.fas
 ```
 3. We call the lineage
 ```bash
-./bin/FastLineageCaller-assign2lineage.py example/db_snps.tsv ref_vs_00-R0025.vrt
+FastLineageCaller-assign2lineage.py example/db_snps.tsv ref_vs_00-R0025.vrt
 --decision: lineage2,lineage2.2,lineage2.2.1,lineage2.2.1.1
 ```
 
 The output shows the lineage and the sublineages
 
-####How to call the lineage starting from a fasta file (multiple scaffolds, contigs)
+#### How to call the lineage starting from a fasta file (multiple scaffolds, contigs)
 1. we use Contiguator to generate a pseudocontig using the scaffolds/contigs
 
 ```
@@ -51,79 +51,20 @@ vrtTools-snps2vrt.py out_mummer.snps example/H37Rv_mod.fasta Map_NC.000962.3/Pse
 
 4. We call the lineage
 ```bash
-./bin/FastLineageCaller-assign2lineage.py example/db_snps.tsv ref_vs_00-R0025.vrt
+FastLineageCaller-assign2lineage.py example/db_snps.tsv ref_vs_00-R0025.vrt
 --decision: lineage2,lineage2.2,lineage2.2.1,lineage2.2.1.1
 ```
 
-###How to call the lineage starting from a vcf file
+### How to call the lineage starting from a vcf file
+1. We convert the vcf file to vrt
+```bash
+vrtTools-vcf2vrt.py example/00-R0025.vcf 00-R0025.vrt 1
+```
 
-
-
-
-
-###Pros and Cons
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-####Callinng the lineage using a vcf file
-
-
-~/lf61/check_strains_maha/12-strain-typing/bin/assign2lineage.py ~/lf61/check_strains_maha/12-strain-typing/data/db_snps.tsv out.vrt 
-done > log_assignments.txt
-
-cat log_assignments.txt |grep "^--" > tmp_assignments.txt
-
-cat tmp_assignments.txt |tr -d "\n"|sed -e 's/.fasta//g'|sed -e 's/--decision://g'|sed -e 's/--strain://g'|sed -e 's/GCA/\nGCA/g' > final_table.tsv
-
-#I generated an ods file -- it is easier to put some notes.
-#I get the names of the strains
-for i in `ls|grep fasta|sed -e 's/.fasta//'`;do printf ${i}"\t";head -1 ${i}.fasta|cut -d" " -f4-10|sed -e 's/, complete genome//';done
-
-
-######################################
-##I try to characterize M. africanum##
-######################################
-mkdir africanum
-head -1 table_33894.tsv > table_complete_genomes_33894.tsv 
-cat table_33894.tsv |grep "Complete Genome" >> table_complete_genomes_33894.tsv
-
-#I downloaded the genomes by hand since there was a problem with the download script (ERROR 500: Internal Server Error)
-gunzip *.fna.gz
-
-
-#rename the files to fasta
-for i in `ls|grep fna|sed -e 's/.fna//'`;do mv ${i}.fna ${i}.fasta;done
-
-#I characterize the strains
-for i in `ls|grep fasta`;do
-echo "--strain: "${i}
-~/lf61/mic_assemblies/18-pilot_cmp_pilon_denovo_00-R0025/bin/run_mummer.py ../../data/h37rv.fasta ${i} mummer
-~/lf61/mic_assemblies/18-pilot_cmp_pilon_denovo_00-R0025/bin/snps2vrt.py mummer.snps ../../data/h37rv.fasta ${i} out.vrt
-~/lf61/check_strains_maha/12-strain-typing/bin/assign2lineage.py ~/lf61/check_strains_maha/12-strain-typing/data/db_snps.tsv out.vrt 
-done > log_assignments.txt
-
-cat log_assignments.txt |grep "^--" > tmp_assignments.txt
-
-cat tmp_assignments.txt |tr -d "\n"|sed -e 's/.fasta//g'|sed -e 's/--decision://g'|sed -e 's/--strain://g'|sed -e 's/GCA/\nGCA/g' > final_table.tsv
-
-
-#I made my selection of strains. I am missing strains from lineages 5 and 7
-#the final selection can be found on the directory selection_strains
+2. We call the lineage
+```
+FastLineageCaller-assign2lineage.py example/db_snps.tsv 00-R0025.vrt
+```
 
 
 
