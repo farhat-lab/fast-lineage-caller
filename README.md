@@ -14,7 +14,6 @@ fast-lineage-caller ~/mfarhat/rollingDB/genomic_data/SAMEA968141/pilon/SAMEA9681
 ```
 The program will output the lineage calls according to the available SNP schemes
 ```
-fast-lineage-caller genomic_data/SAMEA968141.vcf 
 Isolate coll2014        freschi2020     lipworth2019    shitikov2017
 SAMEA968141                     beijing asian_african_2,lin2.2.1
 ```
