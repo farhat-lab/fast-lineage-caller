@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+from importlib import reload
+
+import argparse
+import sys
+import re
+sys.path.append('.')
+from fast_lineage_caller import utils
+from fast_lineage_caller import snp_scheme_parser
+from fast_lineage_caller import lineage_caller_vcf
+import snp_schemes
+from os import path
+import glob
+import inspect
+
+parser = argparse.ArgumentParser()
+parser.add_argument("input_file", type=str,
+                    help="Input file (VCF)")
+parser.add_argument("--out", help="Output .tsv file (lineage calls)")
+parser.add_argument("--noheader", help="Do not display the header", action="store_true")
+parser.add_argument("--scheme", help="Provide a .tsv file with a SNP scheme of your choice")
+args = parser.parse_args()
+
+# does the user wants a header (or not?)
+print_header=""
+if not args.noheader:
+    print_header = "y"
+
+# I get the list of the files containing the snp scheme(s) the user wants
+list_snp_schemes = [] # I initialize this list
+if args.scheme:
+    list_snp_schemes = [args.scheme]
+else:
+    dir_snp_schemes = path.dirname(inspect.getfile(snp_schemes))
+    list_snp_schemes = glob.glob(dir_snp_schemes + "/*.tsv")
+
+# I get the list object of the snp schemes
+d = snp_scheme_parser.read_snp_schemes(list_snp_schemes)
+
+# I detect the input fle type and I call the suitable function to get the lineage
+ftype = utils.detect_file_type(args.input_file)
+name_file = utils.extract_file_name(args.input_file, ftype)
+if ftype == "vcf":
+    lineage_caller_vcf.assign_lineage_from_vcf(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out)
+
+
+
+
