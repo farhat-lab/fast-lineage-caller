@@ -24,7 +24,8 @@ def read_snp_schemes(list_snp_schemes: str) -> dict:
                 allele_change = "_".join([pos, data[2]])
                 tag = data[3]
                 d_tags[tag]=1
-                d_snps[allele_change]={}
+                if allele_change not in d_snps:
+                    d_snps[allele_change]={}
                 d_snps[allele_change][tag]={}
                 if bool(re_to_check_ref_strain_lineage.search(data[0])):
                     list_allele_changes_isolates_not_same_lineage_reference.append(allele_change)

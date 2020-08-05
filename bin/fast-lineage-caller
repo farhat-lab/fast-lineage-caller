@@ -20,12 +20,15 @@ parser.add_argument("input_file", type=str,
 parser.add_argument("--out", help="Output .tsv file (lineage calls)")
 parser.add_argument("--noheader", help="Do not display the header", action="store_true")
 parser.add_argument("--scheme", help="Provide a .tsv file with a SNP scheme of your choice")
+parser.add_argument("--keepred", help="Keep redundant lineage calls", action="store_true")
+parser.add_argument("--count", help="Count the SNPs that support a given lineage call", action="store_true")
 args = parser.parse_args()
 
 # does the user wants a header (or not?)
 print_header=""
 if not args.noheader:
     print_header = "y"
+
 
 # I get the list of the files containing the snp scheme(s) the user wants
 list_snp_schemes = [] # I initialize this list
@@ -41,8 +44,18 @@ d = snp_scheme_parser.read_snp_schemes(list_snp_schemes)
 # I detect the input fle type and I call the suitable function to get the lineage
 ftype = utils.detect_file_type(args.input_file)
 name_file = utils.extract_file_name(args.input_file, ftype)
+
+# does the user wants all the lineage calls, or can I reduce the redundancy?
+keep_red = 0
+if not args.keepred:
+    keep_red = 1
+
+
 if ftype == "vcf":
-    lineage_caller_vcf.assign_lineage_from_vcf(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out)
+    if args.count:
+        lineage_caller_vcf.assign_lineage_from_vcf_snp_counts(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out, keep_red)
+    else:
+        lineage_caller_vcf.assign_lineage_from_vcf(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out, keep_red)
 
 
 
