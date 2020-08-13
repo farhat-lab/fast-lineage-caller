@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name='fast_lineage_caller',
-version='0.2',
+version='0.3',
 description='Module to call Mycobacterium tuberculosis lineages',
 url='https://github.com/farhat-lab/fast-lineage-caller/',
 author='Luca Freschi',
@@ -15,7 +15,7 @@ packages=['fast_lineage_caller',"snp_schemes"],
 classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
-        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
