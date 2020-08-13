@@ -9,6 +9,7 @@ def read_snp_schemes(list_snp_schemes: str) -> dict:
     """
     d_snps = {}
     d_tags = {}
+    d_snps_per_tag_lineage = {}
     list_allele_changes_isolates_not_same_lineage_reference = [] # if these snps are present
     # we are dealing with a strain that does NOT have the same lineage as the
     # reference strain
@@ -31,7 +32,13 @@ def read_snp_schemes(list_snp_schemes: str) -> dict:
                     list_allele_changes_isolates_not_same_lineage_reference.append(allele_change)
                     lineage = lineage.replace("*","")
                 d_snps[allele_change][tag][lineage]={}
+                # I populat the d_tags_snps_per_lineage dictionary (important to calculate the SNPs per lineage per tag)
+                if tag not in d_snps_per_tag_lineage:
+                    d_snps_per_tag_lineage[tag]={}
+                if lineage not in d_snps_per_tag_lineage[tag]:
+                    d_snps_per_tag_lineage[tag][lineage]={}
+                d_snps_per_tag_lineage[tag][lineage][allele_change]={}
     list_tags = sorted(d_tags.keys())
-    return(d_snps, list_allele_changes_isolates_not_same_lineage_reference, list_tags)
+    return(d_snps, list_allele_changes_isolates_not_same_lineage_reference, list_tags, d_snps_per_tag_lineage)
 
 

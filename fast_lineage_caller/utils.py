@@ -35,15 +35,15 @@ def write_down_results(id_isolate: str, d: dict, tag_list: list, print_header: s
                 outf.write("Isolate\t"+"\t".join(sorted(tag_list)) + "\n")
                 outf.write(id_isolate+"\t"+"\t".join(to_print) + "\n")
 
-def write_down_results_snp_counts(id_isolate: str, d: dict, tag_list: list, print_header: str, out_file: str) -> None:
+def write_down_results_snp_counts(id_isolate: str, d: dict, tag_list: list, dict_snps_per_tag_lineage: dict, print_header: str, out_file: str) -> None:
     to_print=[]
     for tag in sorted(tag_list):
         if tag in d:
             #print([l+"(" + str(d[tag][l]) + ")" for l in d[tag].keys()])
-            lcalls_counts = ",".join([l+"(" + str(d[tag][l]) + ")" for l in d[tag].keys()])
+            lcalls_counts = ",".join([l+"(" + str(d[tag][l]) + "/" + str(len(dict_snps_per_tag_lineage[tag][l])) + ")" for l in d[tag].keys()])
             to_print.append(",".join([lcalls_counts]))
         else:
-            to_print.append("")
+            to_print.append("NA")
     if not out_file:
         if print_header == "y":
             print("Isolate\t"+"\t".join(sorted(tag_list)))

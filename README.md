@@ -2,8 +2,17 @@
 Quickly call lineages from `.vcf` files using different SNP schemes. The package will be developed primarily to call *Mtb* (_Mycobacterium tuberculosis_) lineages, but if you build your own SNP scheme you can use it to call lineages for virtually any bacterial species.
 
 ## Installation
+
+### with pip
+
 ```
 pip install fast-lineage-caller
+```
+
+### with conda
+
+```
+conda install -c ejfresch fast-lineage-caller
 ```
 
 ## Usage
@@ -43,8 +52,8 @@ SNP schemes can include one or multiple SNP that define one lineage / sub-lineag
 
 ```
 ./bin/fast-lineage-caller ~/mfarhat/rollingDB/genomic_data/SAMEA968141/pilon/SAMEA968141.vcf --count
-Isolate coll2014        freschi2020     lipworth2019    shitikov2017    stucki2016
-SAMEA968141     lineage2.2.1(1) 2.2.1.1.1(1)    beijing(296)    lin2.2.1(3),asian_african_2(2)
+Isolate coll2014        freschi2020     lipworth2019    shitikov2017
+SAMEA968141     lineage2.2.1(1/1) 2.2.1.1.1(1/1)    beijing(296/296)    lin2.2.1(3/3),asian_african_2(2/2)
 ```
 
 ### Calling lineages on thousands of VCFs
@@ -59,10 +68,10 @@ done >> results.tsv
 
 ### Getting all the lineage calls without removing any redundancy
 
-By default *fast-lineage-caller* will try to remove the redundancy in the lineage calls. What does this mean? The isolate `SAMEA968141`, for instance, belongs to the `lineage2.2.1` (according to the *coll2014* SNP scheme).  When *fast-lineage-caller* checks the variants present in the *vcf* of this isolate, it will find that it actually belongs to `lineage2`, `lineage2.2` and `lineage2.2.1`. The information contained in some these labels is redundant, so *fast-lineage-caller* by default will output only `lineage2.2.1`. However, for some use-cases it is relevant to get all the calls. You can do that by using the `--keepred` (keep redundancy) option:
+By default *fast-lineage-caller* will try to remove the redundancy in the lineage calls. What does this mean? The isolate `SAMEA968141`, for instance, belongs to the `lineage2.2.1` (according to the *coll2014* SNP scheme).  When *fast-lineage-caller* checks the variants present in the *vcf* of this isolate, it will find that it actually belongs to `lineage2`, `lineage2.2` and `lineage2.2.1`. The information contained in some these labels is redundant, so *fast-lineage-caller* by default will output only `lineage2.2.1`. However, for some use-cases it is relevant to get all the calls. You can do that by using the `--keep` (keep redundancy) option:
 
 ```
-./bin/fast-lineage-caller genomic_data/SAMEA968141.vcf --keepred
+./bin/fast-lineage-caller genomic_data/SAMEA968141.vcf --keep
 Isolate coll2014        freschi2020     lipworth2019    shitikov2017    stucki2016
 SAMEA968141     lineage2,lineage2.2.1,lineage2.2        2,2.2.1.1,2.2.1,2.2.1.1.1,2.2   beijing lin2,lin2.2.1,asian_african_2,lin2.2
 ```
@@ -120,9 +129,16 @@ SAMEA968141     lineage2.2
 
 ## Changelog
 
+Version 0.3
+
+- the user can choose to use all the variants (default) or only the ones with the PASS flag for the lineage calling: `--pass` option (feature)
+- show a denominator when counting the SNPs (`--count` option) (bugfix)
+- renamed the option `--keepred` to `--keep` (bugfix)
+- use `NA` instead of ` <blank>` as output when no SNP is found in the .vcf for a given SNP scheme (bugfix)
+
 Version 0.2
 
-- the user can decide to  remove (default) or keep the redundant lineage calls: `--keepred` option (feature)
+- the user can decide to  remove (default) or keep the redundant lineage calls: `--keep` option (feature)
 - the user can get the count of the SNPs that support a given lineage call: `--count` option (feature)
 - module available on conda (feature)
 - added information on how to build a custom SNP scheme (feature)

@@ -20,8 +20,9 @@ parser.add_argument("input_file", type=str,
 parser.add_argument("--out", help="Output .tsv file (lineage calls)")
 parser.add_argument("--noheader", help="Do not display the header", action="store_true")
 parser.add_argument("--scheme", help="Provide a .tsv file with a SNP scheme of your choice")
-parser.add_argument("--keepred", help="Keep redundant lineage calls", action="store_true")
+parser.add_argument("--keep", help="Keep redundant lineage calls", action="store_true")
 parser.add_argument("--count", help="Count the SNPs that support a given lineage call", action="store_true")
+parser.add_argument("--pass", help="Consider only the variants with the flag PASS", action="store_true")
 args = parser.parse_args()
 
 # does the user wants a header (or not?)
@@ -47,15 +48,20 @@ name_file = utils.extract_file_name(args.input_file, ftype)
 
 # does the user wants all the lineage calls, or can I reduce the redundancy?
 keep_red = 0
-if not args.keepred:
+if not args.keep:
     keep_red = 1
+
+# does the user wants to consider all variants or only the ones with the flag PASS
+pass_filter = 0
+if args.keep:
+    pass_filter = 1
 
 
 if ftype == "vcf":
     if args.count:
-        lineage_caller_vcf.assign_lineage_from_vcf_snp_counts(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out, keep_red)
+        lineage_caller_vcf.assign_lineage_from_vcf_snp_counts(name_file, args.input_file, d[0], d[1], d[2], d[3], print_header, args.out, keep_red, pass_filter)
     else:
-        lineage_caller_vcf.assign_lineage_from_vcf(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out, keep_red)
+        lineage_caller_vcf.assign_lineage_from_vcf(name_file, args.input_file, d[0], d[1], d[2], print_header, args.out, keep_red, pass_filter)
 
 
 
