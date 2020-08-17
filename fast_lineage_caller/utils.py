@@ -24,7 +24,7 @@ def write_down_results(id_isolate: str, d: dict, tag_list: list, print_header: s
         if tag in d:
             to_print.append(",".join(d[tag].keys()))
         else:
-            to_print.append("")
+            to_print.append("NA")
     if not out_file:
         if print_header == "y":
             print("Isolate\t"+"\t".join(sorted(tag_list)))

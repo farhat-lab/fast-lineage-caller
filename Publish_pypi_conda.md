@@ -32,6 +32,7 @@ Modify the code and then:
 First I run conda skeleton:
 
 ```
+cd build_conda_package
 conda skeleton pypi fast-lineage-caller
 ```
 
