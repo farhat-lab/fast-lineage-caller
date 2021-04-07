@@ -1,9 +1,9 @@
 ## Checklist to upload the module on Pypi and Conda
 ### Pypi
 Modify the code and then:
-1. Commit everything with `git`.
+1. update the `README.md` file and in particular the change log.
 
-2. update the `README.md` file and in particular the change log.
+2. Commit everything with `git`.
 
 3. use `git tag` to define a new release. The message should be a summary of the change log. For instance:
 
@@ -36,7 +36,7 @@ cd build_conda_package
 conda skeleton pypi fast-lineage-caller
 ```
 
-I change some fields on the `yaml` file (path of the file on pypi, github ID).
+I change some fields on the `yaml` file (path of the file on pypi, github ID: you can get it [here](https://api.github.com/users/ejfresch).
 
 Then I can directly build the package, since this is a pure python package:
 

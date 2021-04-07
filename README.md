@@ -85,8 +85,8 @@ These are the SNP schemes currently available on `fast-lineage-caller`. They are
 | Tag          | Reference                                                    | Notes                                                        |
 | ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | coll2014     | Coll, F. *et al.* A robust SNP barcode for typing Mycobacterium tuberculosis complex strains. *Nat. Commun.* **5**, 4812 (2014) |                                                              |
-| lipworth2019 | Samuel Lipworth *et al.* SNP-IT Tool for Identifying Subspecies and Associated Lineages of Mycobacterium tuberculosis Complex. *Emerging Infectious Disease journal* **25**, (2019) | This SNP barcode is implemented in [SNPit](https://github.com/philipwfowler/snpit). |
-| freschi2020  | Soon on BioRXiv!                                             |                                                              |
+| lipworth2019 | Lipworth, S. *et al.* SNP-IT Tool for Identifying Subspecies and Associated Lineages of Mycobacterium tuberculosis Complex. *Emerging Infectious Disease journal* **25**, (2019) | This SNP barcode is implemented in [SNPit](https://github.com/philipwfowler/snpit). |
+| freschi2020  | Freschi, L. *et al.* Population structure, biogeography and transmissibility of *Mycobacterium tuberculosis*, bioRxiv 2020.09.29.293274 |                                                              |
 | shitikov2017 | Shitikov, E. *et al.* Evolutionary pathway analysis and unified classification of East Asian lineage of Mycobacterium tuberculosis. *Sci. Rep.* **7**, 9227 (2017) |                                                              |
 | stucki2016   | Stucki, D. *et al.* Mycobacterium tuberculosis lineage 4 comprises globally distributed and geographically restricted sublineages. *Nat. Genet.* **48**, 1535–1543 (2016) |                                                              |
 
@@ -128,6 +128,12 @@ SAMEA968141     lineage2.2
 
 
 ## Changelog
+
+Version 0.3.2
+
+- The `freschi2020` SNP scheme used in the versions 0.3.1 is now renamed `freschi_hierarchical2020`. 
+- We introduce a shorthand naming system (which gets the tag `freschi2020`) to simplify and shorten the lineage designations (= names) of `freschi_hierarchical2020` (bugfix). 
+- We add to the package the `stucki2016` SNP scheme (bugfix).
 
 Version 0.3.1
 
